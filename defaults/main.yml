@@ -1,0 +1,36 @@
+---
+# MODULES
+# =======
+apache_modules_install: []
+apache_modules_enable:
+- rewrite
+- ssl
+- headers
+apache_modules_disable: []
+
+# SITES
+# =====
+# state: enabled | disabled
+# name: *.conf
+# template: nextcloud.conf.j2
+apache_sites:
+- template:
+  name:
+  state:
+  vars: []
+
+# CONFIGS
+# =======
+# state: enabled | disabled
+# template: security.conf.j2
+apache_configs:
+- template:
+  name:
+  state:
+
+# SYSTEMD
+# =======
+apache_systemd_enabled: true
+apache_systemd_state: started
+apache_systemd_overrides: []
+apache_systemd_overrides_reset: false

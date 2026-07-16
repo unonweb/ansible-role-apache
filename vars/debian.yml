@@ -1,0 +1,7 @@
+---
+__apache_package: "apache2"
+__apache_service: "apache2"
+__apache_conf_available_dir: "/etc/apache2/conf-available"
+__apache_conf_enabled_dir: "/etc/apache2/conf-enabled"
+__apache_sites_available_dir: "/etc/apache2/sites-available"
+__apache_sites_enabled_dir: "/etc/apache2/sites-enabled"

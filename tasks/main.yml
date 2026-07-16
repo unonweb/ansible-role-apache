@@ -1,0 +1,25 @@
+---
+- name: apache role
+  tags:
+    - apache
+  block:
+
+  # load either vars/debian.yml or vars/redhat.yml
+  - name: Include OS-specific variables
+    ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+  - name: Ensure Apache is installed
+    ansible.builtin.package:
+      name: "{{ __apache_package }}"
+      state: present
+
+  - name: Ensure Apache is started and enabled
+    ansible.builtin.systemd_service:
+      scope: system
+      name: "{{ __apache_service }}"
+      state: started
+      enabled: true
+
+  - ansible.builtin.import_tasks: modules.yml
+  - ansible.builtin.import_tasks: configs.yml
+  - ansible.builtin.import_tasks: sites.yml

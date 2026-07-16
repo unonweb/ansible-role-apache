@@ -1,0 +1,24 @@
+<VirtualHost *:80>
+
+     ServerAdmin {{ item.vars.server_admin }}
+     DocumentRoot {{ item.vars.document_root }}/
+     ServerName {{ item.vars.server_name }}
+
+     RemoteIPHeader X-Forwarded-For
+     # We need to trust dmz-db
+     RemoteIPTrustedProxy {{ item.vars.remote_ip_trusted_proxy }}
+
+     <Directory {{ item.vars.document_root }}/>
+        Options +FollowSymlinks
+        AllowOverride All
+        Require all granted
+          <IfModule mod_dav.c>
+            Dav off
+          </IfModule>
+        SetEnv HOME {{ item.vars.document_root }}
+        SetEnv HTTP_HOME {{ item.vars.document_root }}
+     </Directory>
+     ErrorLog ${APACHE_LOG_DIR}/error.log
+     CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>

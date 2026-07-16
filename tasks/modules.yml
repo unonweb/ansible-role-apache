@@ -1,0 +1,19 @@
+---
+- when: ansible_os_family == "Debian"
+  block:
+
+  # enable
+  - name: Enable Apache modules (Debian/Ubuntu)
+    loop: "{{ apache_modules_enable }}"
+    community.general.apache2_module:
+      name: "{{ item }}"
+      state: present
+    notify: Restart apache
+
+  # disable
+  - name: Disable Apache modules (Debian/Ubuntu)
+    loop: "{{ apache_modules_disable }}"
+    community.general.apache2_module:
+      name: "{{ item }}"
+      state: absent
+    notify: Restart apache

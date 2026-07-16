@@ -1,0 +1,7 @@
+---
+__apache_package: "httpd"
+__apache_service: "httpd"
+__apache_conf_available_dir: "/etc/httpd/conf.d"
+__apache_conf_enabled_dir: "/etc/httpd/conf.d" # RHEL flattens everything into conf.d
+__apache_sites_available_dir: "/etc/httpd/conf.d"
+__apache_sites_enabled_dir: "/etc/httpd/conf.d"

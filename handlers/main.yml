@@ -1,0 +1,14 @@
+---
+- name: Restart apache
+  become: true
+  ansible.builtin.systemd_service:
+    scope: system
+    name: "{{ __apache_service }}"
+    state: restarted
+
+- name: Reload apache
+  become: true
+  ansible.builtin.systemd_service:
+    scope: system
+    name: "{{ __apache_service }}"
+    state: reloaded

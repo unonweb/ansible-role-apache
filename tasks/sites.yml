@@ -1,0 +1,42 @@
+---
+- when: apache_sites | length > 0
+  block:
+
+  # assertions
+  - name: Assertions for apache_sites
+    loop: "{{ apache_sites }}"
+    ansible.builtin.assert:
+      that:
+      - item.state in ['enabled', 'disabled']
+      - item.name is suffix('.conf')
+      - item.template != None
+
+  # template
+  - name: Template sites
+    loop: "{{ apache_sites }}"
+    ansible.builtin.template:
+      src: "{{ item.template }}"
+      dest: "{{ __apache_sites_available_dir }}/{{ item.name }}"
+      owner: root
+      group: root
+      mode: '0644'
+    notify: Reload apache
+
+  # enable
+  - name: Enable sites
+    loop: "{{ apache_sites }}"
+    ansible.builtin.file:
+      src: "{{ __apache_sites_available_dir }}/{{ item.name }}"
+      dest: "{{ __apache_sites_enabled_dir }}/{{ item.name }}"
+      state: link
+    when: item.state == "enabled"
+    notify: Reload apache
+
+  # disable
+  - name: Disable sites
+    loop: "{{ apache_sites }}"
+    ansible.builtin.file:
+      path: "{{ __apache_sites_enabled_dir }}/{{ item.name }}"
+      state: absent
+    when: item.state == "disabled"
+    notify: Reload apache
