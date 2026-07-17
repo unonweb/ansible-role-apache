@@ -1,7 +1,11 @@
 ---
+# INSTALL
+# =======
+apache_install_packages: []
+apache_remove_packages: []
+
 # MODULES
 # =======
-apache_modules_install: []
 apache_modules_enable:
 - rewrite
 - ssl

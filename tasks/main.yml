@@ -8,17 +8,23 @@
   - name: Include OS-specific variables
     ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
+  # install apache
   - name: Ensure Apache is installed
     ansible.builtin.package:
       name: "{{ __apache_package }}"
       state: present
 
-  - name: Ensure Apache is started and enabled
-    ansible.builtin.systemd_service:
-      scope: system
-      name: "{{ __apache_service }}"
-      state: started
-      enabled: true
+  # install packages
+  - name: Install packages {{ apache_install_packages }}
+    ansible.builtin.package:
+      name: "{{ apache_install_packages }}"
+      state: present
+
+  # remove packages
+  - name: Remove packages {{ apache_remove_packages }}
+    ansible.builtin.package:
+      name: "{{ apache_remove_packages }}"
+      state: absent
 
   - ansible.builtin.import_tasks: modules.yml
   - ansible.builtin.import_tasks: configs.yml
