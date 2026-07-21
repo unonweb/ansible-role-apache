@@ -1,5 +1,6 @@
 ---
 - when: apache_sites | length > 0
+  tags: [apache-sites]
   block:
 
   # assertions
@@ -8,7 +9,7 @@
     ansible.builtin.assert:
       that:
       - item.state in ['enabled', 'disabled']
-      - item.name is suffix('.conf')
+      - item.name.endswith('.conf')
       - item.template != None
 
   # template

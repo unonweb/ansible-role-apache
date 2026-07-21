@@ -6,7 +6,10 @@
     - __apache_conf_enabled_dir != None
 
 # template
-- name: Template configs
+- when:
+  - item.template is defined
+  - item.template | length > 0
+  name: Template configs
   ansible.builtin.template:
     src: "{{ item.template }}"
     dest: "{{ __apache_conf_available_dir }}/{{ item.name }}"
@@ -14,7 +17,6 @@
     group: root
     mode: '0644'
   loop: "{{ apache_configs }}"
-  when: item.template | length > 0
   notify: Reload apache
 
 # enable
