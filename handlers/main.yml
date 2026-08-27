@@ -12,3 +12,9 @@
     scope: system
     name: "{{ __apache_service }}"
     state: reloaded
+
+- name: systemctl --system daemon-reload
+  become: true
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    scope: system
