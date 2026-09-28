@@ -3,10 +3,7 @@
   tags: [role-apache]
   block:
 
-  # load either vars/debian.yml or vars/redhat.yml
-  - name: Include OS-specific variables
-    ansible.builtin.include_vars: "{{ ansible_facts['os_family'] }}.yml"
-
+  - ansible.builtin.import_tasks: apache-load-vars.yml
   - ansible.builtin.import_tasks: apache-install.yml
   - ansible.builtin.import_tasks: apache-modules.yml
   - ansible.builtin.import_tasks: apache-configs.yml
