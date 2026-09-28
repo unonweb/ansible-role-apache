@@ -21,7 +21,7 @@ apache_sites:
 - template:
   name:
   state:
-  vars: []
+  vars: {}
 
 # CONFIGS
 # =======

@@ -1,0 +1,21 @@
+---
+- tags: [role-apache-install]
+  block:
+  
+  # install apache
+  - name: Ensure Apache is installed
+    ansible.builtin.package:
+      name: "{{ __apache_package }}"
+      state: present
+
+  # install packages
+  - name: Install packages {{ apache_install_packages }}
+    ansible.builtin.package:
+      name: "{{ apache_install_packages }}"
+      state: present
+
+  # remove packages
+  - name: Remove packages {{ apache_remove_packages }}
+    ansible.builtin.package:
+      name: "{{ apache_remove_packages }}"
+      state: absent

@@ -1,6 +1,10 @@
 ---
-- when: apache_sites | length > 0
-  tags: [apache-sites]
+- tags: [role-apache-sites]
+  when:
+  - apache_sites is not string
+  - apache_sites is not mapping
+  - apache_sites is iterable
+  - apache_sites | length > 0
   block:
 
   # assertions
